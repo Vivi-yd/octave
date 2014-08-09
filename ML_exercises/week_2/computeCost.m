@@ -14,13 +14,12 @@ J = 0;
 %               You should set J to the cost.
 
 % calculate the prediction of each element in given vector X by the hypothesis.
-h = theta' * X	
-for i = 1:m+1,
-	err_sq = err_sq + (h - y)^2 %computing error square terms
-	end	
-
-% compute the cost 
-J = 1/(2*m) * err_sq
+   for i=1:m,
+       x = [1; X(i, 2)];
+       J = J + (theta' * x  - y(i))^2;
+   end
+   
+J = 1/(2*m) * J; 
 
 
 % =========================================================================
