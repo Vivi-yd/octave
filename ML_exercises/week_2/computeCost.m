@@ -14,7 +14,6 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-
 %for each training example compute the error square term and sum them up
 	for i=1:m,	
 		%theta transpose is 1x2 vector
