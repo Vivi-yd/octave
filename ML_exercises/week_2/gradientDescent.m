@@ -17,13 +17,15 @@ for iter = 1:num_iters,
     %       of the cost function (computeCost) and gradient here.
     %
 	% set a value for the term that will sum up m times
-	D = 0
+	D = zeros(size(theta))
 	for i = 1:m,
-		D = D + (theta' * X(i, :)'  - y(i))* X(i); % updating the sum term m times
+		D = D + (theta' * X(i, :)'  - y(i))* X(i, :)'; % updating the sum term m times
+		%disp(size((X(i, :)')))
 		
 	end
 	% update theta according to definition for each iteration.
-	theta = theta - (alpha/m)*D	
+	theta = theta - (alpha/m)*D
+	%disp(size(theta))
 	
 
 
@@ -36,7 +38,7 @@ for iter = 1:num_iters,
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCost(X, y, theta);
-	disp(J_history(iter))
+	
 
 end
 
