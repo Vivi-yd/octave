@@ -19,7 +19,8 @@ for iter = 1:num_iters,
 	% set a value for the term that will sum up m times
 	D = 0
 	for i = 1:m,
-		D = D + (theta' * X(i, :)'  - y(i));
+		D = D + (theta' * X(i, :)'  - y(i))* X(i); % updating the sum term m times
+		
 	end
 	% update theta according to definition for each iteration.
 	theta = theta - (alpha/m)*D	
@@ -35,6 +36,7 @@ for iter = 1:num_iters,
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCost(X, y, theta);
+	disp(J_history(iter))
 
 end
 
