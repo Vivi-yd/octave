@@ -35,11 +35,13 @@ for i = 1:m,
 
 J = (1/m) * cost; % divide the cost by m
 
+
+
 n = size(theta); % the dimensions of theta
 
 sq_para = 0; % initialize the squared parameters
 
-for j = 2:n,
+for j = 2:n, % starting from 2 since theta(1) (first element) is not regularized
 	
 	sq_para += (theta(j))^2;
 	
@@ -53,6 +55,7 @@ J += reg_factor; % adding the regularized parameters factors to the cost J
 
 % ========================= computing gradient ======================
 
+% the theta(1) (or theta zero) part
 grad_zero = 0
 
 for i = 1:m,		
@@ -66,6 +69,8 @@ for i = 1:m,
 	end
 grad(1) = (1/m)* grad_zero
 
+
+%%%% regularization part starting from theta(2)
 for j = 2:n, 
 	
 	% initialize the jth element of grad
