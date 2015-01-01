@@ -61,3 +61,26 @@ for j = 1:n,
 % =============================================================
 
 end
+
+% ======================= vectorized ==========================
+
+%====================== Compute Cost  ===================
+% initialize cost
+cost = 0;
+
+%define the hypothesis h(X) for classification (vectorized)
+hypothesis = sigmoid(X*theta);
+
+cost = sum((-y' * log(hypothesis) - (1-y)' * log(1-hypothesis)));
+
+% compute final cost by dividing 1/m
+J = (1/m)*cost;
+
+%======================= Gradient ======================
+
+grad = 1/m * (X' * (hypothesis - y));
+
+
+% =============================================================
+
+end
