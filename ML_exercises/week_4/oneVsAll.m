@@ -37,7 +37,7 @@ X = [ones(m, 1) X];
 
 for idx = 1:num_labels,
 
-	c = zeros(size(num_labels));
+	c = zeros(size(y));
 	c(idx) = idx;
 % Set Initial theta
 	initial_theta = zeros(n + 1, 1);
