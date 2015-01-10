@@ -35,8 +35,10 @@ X = [ones(m, 1) X];
 %       are dealing with large number of parameters.
 %
 
-for c = 1:num_labels,
-%
+for idx = 1:num_labels,
+
+	c = zeros(size(num_labels));
+	c(idx) = idx;
 % Set Initial theta
 	initial_theta = zeros(n + 1, 1);
 %     
