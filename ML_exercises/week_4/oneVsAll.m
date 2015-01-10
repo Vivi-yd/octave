@@ -35,18 +35,24 @@ X = [ones(m, 1) X];
 %       are dealing with large number of parameters.
 %
 
-for idx = 1:num_labels,
-
-	c = zeros(size(y));
-	c(idx) = idx;
-% Set Initial theta
+for itr = 1:num_labels,
+	
+	% create a vector of all ones of size y
+	c = ones(size(y));
+	
+	% transform vector c to a vector with all values same as current num_labels
+	c = c*itr;
+	
+	% Set Initial theta
 	initial_theta = zeros(n + 1, 1);
-%     
-% Set options for fminunc
+    
+	% Set options for fminunc
 	options = optimset('GradObj', 'on', 'MaxIter', 50);
-% 
-% Run fmincg to obtain the optimal theta, This function will return theta and the cost 
+
+	% Run fmincg to obtain the optimal theta, This function will return theta and the cost 
 	[theta] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+	
+	all_theta(itr) = theta;
 	
 	endfor
 
