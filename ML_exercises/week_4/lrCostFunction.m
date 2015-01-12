@@ -38,24 +38,22 @@ grad = zeros(size(theta));
 
 %====================== Compute Cost (vectorized) ===================
 
-
-%define the hypothesis h(X) for classification (vectorized)
+% define hypothesis for logistic regression
 hypothesis = sigmoid(X*theta);
 
-J = (1/m)*sum((-y' * log(hypothesis) - (1-y)' * log(1-hypothesis))) + (lambda/(2*m))* sum(theta(2:end).^2);
+% compute the cost with regularized term starting from 2nd feature.
+J = (1/m) * sum(-y' * log(hypothesis) - (1-y)'*log(1-hypothesis)) + (lambda/(2*m)) * sum(theta(2:end).^2);
 
 
 %======================= Gradient (vectorized) ======================
 
-% the theta(1) (or theta zero) part
-grad(1) = 1/m * (X(:,1)' * (hypothesis - y));
+% the derivative term of the first feature
+grad(1) = (1/m) * X(:,1)' * (hypothesis - y);
 
-%%%% regularization part starting from theta(2)
-grad(2:end) = (1/m * (X(:,2:end)' * (hypothesis - y))) + (lambda/m)*theta(2:end);
-
+% regularized derivative terms from 2nd feature onward.
+grad(2:end) = ((1/m)* (X(:,2:end)'*(hypothesis-y))) + theta(2:end)*(lambda/m);
 
 % =============================================================
 
-grad = grad(:);
 
 end
