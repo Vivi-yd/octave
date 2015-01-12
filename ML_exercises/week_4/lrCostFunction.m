@@ -42,7 +42,7 @@ grad = zeros(size(theta));
 hypothesis = sigmoid(X*theta);
 
 % compute the cost with regularized term starting from 2nd feature.
-J = (1/m) * sum(-y' * log(hypothesis) - (1-y)'*log(1-hypothesis)) + (lambda/(2*m)) * sum(theta(2:end).^2);
+J = (1/m) * (-y' * log(hypothesis) - (1-y)'*log(1-hypothesis)) + (lambda/(2*m)) * sum(theta(2:end).^2);
 
 
 %======================= Gradient (vectorized) ======================
