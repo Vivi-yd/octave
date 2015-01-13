@@ -30,10 +30,12 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-pred = X * all_theta' ;
-p = max(pred, [], 2);
+% the matrix that contains the probabilities at which the prediction is correct
+prob_matrix = sigmoid(X*all_theta');
 
-
+% find the max of each row to return the answer that most likely to be correct
+% and store in vector p
+[prob_val, p] = max(prob_matrix, [], 2);
 
 
 
