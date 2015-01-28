@@ -64,9 +64,29 @@ Theta2_grad = zeros(size(Theta2));
 
 % ======================== part I code =============================
 
-% Y is the desired output,
+% Y is the transformed y such that it is compatible to the 10 classes.
 % obtained by uses elements of y to as indices to select rows from an identity matrix.
-Y = eye(num_labels)(y, :); %5000x10
+Y = eye(num_labels)(y, :); % 5000x10
+
+
+%% Forward Propagation
+
+% activation of first layer, add bias unit.
+a1 = [ones(m, 1), X]; % 5000x401
+
+% compute the second layers (hidden) and add bias unit.
+z2 = a1 * Theta1'; % 5000x25
+
+a2 = [ones(m, 1), sigmoid(z2)]; % 5000x26
+
+% compute the output layer
+z3 = a2 * Theta2'; % 5000x10
+
+hyp = sigmoid(z3); % this is the final output h(X) of the network
+
+
+%% compute the cost function using hyp from the neural network
+cost = -Y.* log(hyp) - (1-Y).* log(1-hyp);
 
 
 
