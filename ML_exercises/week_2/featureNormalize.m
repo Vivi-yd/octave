@@ -24,25 +24,18 @@ sigma = zeros(1, size(X, 2));
 %               each feature. 
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
-%
-for j = 1:size(mu,2),
-      
-	mu(j) = mean(X(:,j));
-	sigma(j) = std(X(:,j));
-	
-	X_norm(:, j) = (X(:,j) - mu(j))/sigma(j); 
+%       
+mu = mean(X, 1); % this gives a row vector of all means.
+sigma = std(X, 1); % this gives a row vector of all standard deviation.
 
-end
+for j = 1:size(X, 1),
 
-
-
-
+	X_norm(j, :) = (X(j, :) - mu)./sigma; %normalize each feature to give a vector.
 
 	
-
-
-
-
+endfor
+% alternatively, since octave will accept X_norm = (X - mu) ./ sigma;
+% although it is computationally incorrect due to dimension but it is simpler in coding.
 
 
 
@@ -51,3 +44,5 @@ end
 % ============================================================
 
 end
+
+
