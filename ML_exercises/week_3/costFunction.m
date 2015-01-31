@@ -20,65 +20,19 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
-% initialize cost
-cost = 0
+% ===================== Logistic Regression Cost ===========================
 
-% iterate from 1 to m
-for i = 1:m,
-	% the h(x) for classification 
-	hypothesis = sigmoid(X(i,:)*theta);
-	
-	% incrementing the cost
-	cost = cost + ((-1)* y(i) * log(hypothesis)) - (1-y(i)) * log(1- hypothesis);
-	
-	end
+% compute the output from the Logistic Regression hypothesis
+hyp = sigmoid(X*theta);
 
-n = size(theta); % the dimensions of theta
+% compute the cost of Logistic Regression as per the Cost Function.
+cost = -y' * log(hyp) - (1-y)'*log(1-hyp);
+J = cost/m;
 
+% =============== Logistic Regression Gradient ===================================
 
-J = (1/m) * cost; % divide the whole cost by m
+grad = (1/m)* (X'*(hyp - y)); %result in 3x1 vector, same with theta.
 
-% =========== the gradient ============
-for j = 1:n, 
-	
-	% initialize the jth element of grad
-	gradient = 0;
-	
-	for i = 1:m,
-		
-		% the h(x) for classification 
-		hypothesis = sigmoid(X(i,:)*theta);
-		
-		% incrementation of the jth element of grad
-		gradient = gradient + (hypothesis - y(i)) * X(i,:)(j);
-		
-		end
-	% assign each element to the resulting sum of the incrementation
-	grad(j) = (1/m) * gradient;
-
-	end	
-
-% =============================================================
-
-end
-
-% ======================= vectorized ==========================
-
-%====================== Compute Cost  ===================
-% initialize cost
-cost = 0;
-
-%define the hypothesis h(X) for classification (vectorized)
-hypothesis = sigmoid(X*theta);
-
-cost = sum((-y' * log(hypothesis) - (1-y)' * log(1-hypothesis)));
-
-% compute final cost by dividing 1/m
-J = (1/m)*cost;
-
-%======================= Gradient ======================
-
-grad = 1/m * (X' * (hypothesis - y));
 
 
 % =============================================================

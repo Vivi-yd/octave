@@ -13,13 +13,20 @@ figure; hold on;
 %
 
 
-% Find Indices of Positive and Negative Examples
-pos = find(y==1); neg = find(y == 0);
-% Plot Examples
-plot(X(pos, 1), X(pos, 2), 'k+','LineWidth', 2, ...
-'MarkerSize', 7);
-plot(X(neg, 1), X(neg, 2), 'mo', 'MarkerFaceColor', 'y', ...
-'MarkerSize', 7);
+% find the indices corresponding to positive examples
+pos = find(y == 1); % store in vector pos.
+
+% find the indices corresponding to negative examples
+neg = find(y == 0); % store in vector neg.
+
+% plot positive examples with a "+" and negative with a "o".
+plot(X(pos, 1), X(pos, 2), 'k+', 'LineWidth', 2, 'MarkerSize', 7)
+plot(X(neg, 1), X(neg, 2), 'ko', 'LineWidth', 2, 'MarkerFaceColor', 'y', 'MarkerSize', 7);
+
+xlabel('Exam score 1'); % set label on x-axis.
+ylabel('Exam score 2'); % set label on y-axis.
+
+
 
 
 
