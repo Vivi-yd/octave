@@ -21,27 +21,29 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-% ====================== forward propagation neural network model - Vivi =========================
 
-% add bias unit to matrix X (input layer), making it a 5000x401 matrix
-a1 = [ones(m, 1), X];
+% The Feedforward Propagation implementation
 
-z2 = a1*Theta1'; % result to 5000x25 matrix
+% the Input layer
+a1 = [ones(m, 1), X]; % add bias unit to X -> 5000x401.
 
-% compute activation of layer two and then add bias unit (hidden layer).
-a2 = [ones(m, 1), sigmoid(z2)]; % result in 5000x26 matrix
+% the Hidden layer
+z2 = a1*Theta1'; % 5000x25.
+a2 = [ones(m, 1), sigmoid(z2)]; % apply sigmoid and add bias unit -> 5000x26
 
-z3 = a2 * Theta2'; % gives a 5000x10 matrix
+% the Output layer
+z3 = a2* Theta2'; % 5000x10
 
-% compute the output layer
+% Final Output of the Network
 a3 = sigmoid(z3);
 
-% find the max (of the 10 elements) of each row to return the label
-% that most likely to be correct and store in vector p 
-[prob_val, p] = max(a3, [], 2);
+% return the predictions of class that each training example belongs by taking 
+% the index of the max element of each row and store in p.
+[x, p] = max(a3, [], 2);
 
 
-% by Vivi =========================================================================
+
+% =========================================================================
 
 
 end

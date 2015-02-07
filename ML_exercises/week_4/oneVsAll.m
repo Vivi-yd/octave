@@ -34,27 +34,40 @@ X = [ones(m, 1) X];
 %       fmincg works similarly to fminunc, but is more efficient when we
 %       are dealing with large number of parameters.
 %
+% Example Code for fmincg:
+%
+%     % Set Initial theta
+%     initial_theta = zeros(n + 1, 1);
+%     
+%     % Set options for fminunc
+%     options = optimset('GradObj', 'on', 'MaxIter', 50);
+% 
+%     % Run fmincg to obtain the optimal theta
+%     % This function will return theta and the cost 
+%     [theta] = ...
+%         fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+%                 initial_theta, options);
+%
 
-for itr = 1:num_labels,
-	
-	% create a vector of all ones of size y
-	c = ones(size(y));
-	
-	% transform vector c to a vector with all values same as current num_labels
-	c = c*itr;
-	
-	% Set Initial theta
-	initial_theta = zeros(n + 1, 1);
-    
-	% Set options for fminunc
-	options = optimset('GradObj', 'on', 'MaxIter', 50);
+%Set Initial theta
+initial_theta = zeros(n + 1, 1);
 
-	% Run fmincg to obtain the optimal theta, This function will return theta and the cost 
-	[theta] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+% Set options for fminunc
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+
+for num_label = 1:num_labels, % iterate over each class
 	
-	all_theta(itr, :) = theta;
+	% c is a vector that contains values of the current num_label, 
+	c = ones(size(m), 1) * num_label; % e.g. c = [6;6;6;6...] when currently iterating class 6.
 	
-	endfor
+	% Run fmincg to obtain the optimal theta
+	% This function will return theta and the cost 
+	[theta]= fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+
+	all_theta(num_label, :) = theta; % assign theta obtain to the corresponding row of all_theta
+
+endfor
+
 
 
 

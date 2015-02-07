@@ -36,24 +36,29 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-%====================== Compute Cost (vectorized) ===================
+% ===================== Logistic Regression Cost (Regularized) ===========================
 
-% define hypothesis for logistic regression
-hypothesis = sigmoid(X*theta);
+% the output of Logistic Regression Hypothesis
+hyp = sigmoid(X*theta);
 
-% compute the cost with regularized term starting from 2nd feature.
-J = (1/m) * (-y' * log(hypothesis) - (1-y)'*log(1-hypothesis)) + (lambda/(2*m)) * sum(theta(2:end).^2);
+% compute the cost of the Logistic Regression according to the cost function defined.
+J = (1/m)*(-y'* log(hyp) - (1-y)'*log(1-hyp));
+
+% add the regularization to the cost
+J = J + (lambda/(2*m))* sum(theta(2:end).^2);
 
 
-%======================= Gradient (vectorized) ======================
+% =============== Logistic Regression Gradient (regularized) ===================================
 
-% the derivative term of the first feature
-grad(1) = (1/m) * X(:,1)' * (hypothesis - y);
+% grad corresponding to j = 0 (1 in octave) is not regularized
+grad(1) = (1/m)* (X(:,1)' * (hyp - y));
 
-% regularized derivative terms from 2nd feature onward.
-grad(2:end) = ((1/m)* (X(:,2:end)'*(hypothesis-y))) + theta(2:end)*(lambda/m);
+% grad corresponding to j >= 1 (2 in octave) is regularized
+grad(2:end) = (1/m)* (X(:, 2:end)' * (hyp - y)) + (lambda/m)* theta(2:end);
+
 
 % =============================================================
 
+grad = grad(:);
 
 end
