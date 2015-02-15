@@ -62,37 +62,68 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% ======================== part I code =============================
+% ===============Part 1 Feedforward & Cost Function====================
 
-% Y is the transformed y such that it is compatible to the 10 classes.
+% a) The Feedforward Propagation implementation
+
+% the Input layer
+a1 = [ones(m, 1), X]; % add bias unit to X -> 5000x401.
+
+% the Hidden layer
+z2 = a1*Theta1'; % 5000x25.
+a2 = [ones(m, 1), sigmoid(z2)]; % apply sigmoid and add bias unit -> 5000x26
+
+% the Output layer
+z3 = a2* Theta2'; % 5000x10
+
+% Final Output of the Network
+hyp = sigmoid(z3);
+
+
+% b) The Cost Function
+
+% Y is the transformed y such that it is compatible to the 10 classes represented by 1's and 0's.
+% if 5th element of y is 3, the 5th row of Y is [0 0 1 0 0 0 0 0 0 0]
 % obtained by uses elements of y to as indices to select rows from an identity matrix.
-Y = eye(num_labels)(y, :); % 5000x10
+Y = eye(num_labels)(y, :); % 5000x10 each row is one training example.
 
-
-%% Forward Propagation
-
-% activation of first layer, add bias unit.
-a1 = [ones(m, 1), X]; % 5000x401
-
-% compute the second layers (hidden) and add bias unit.
-z2 = a1 * Theta1'; % 5000x25
-
-a2 = [ones(m, 1), sigmoid(z2)]; % 5000x26
-
-% compute the output layer
-z3 = a2 * Theta2'; % 5000x10
-
-hyp = sigmoid(z3); % this is the final output h(X) of the network
-
-
-%% compute the cost function using hyp from the neural network
-cost = -Y.* log(hyp) - (1-Y).* log(1-hyp);
+% Cost Function and regularization
+J = (1/m) * sum(((-Y.*log(hyp)) - (1-Y).*log(1-hyp))(:)) + (lambda/(2*m))*(sum((Theta1(:,2:end).^2)(:)) + sum((Theta2(:,2:end).^2)(:)));
 
 
 
 
+% ===============Part 2 Backpropagation ====================
 
-
+%iterating each training example t from 1 to m
+for t = 1:m,
+	
+	% 1) compute all activations by feed forwarding
+	a1 = [1, X(t,:)]; % 1x401
+	
+	z2 = a1*Theta1'; %1x25
+	
+	a2 = [1, sigmoid(z2)]; %1x26 
+	
+	z3 = a2*Theta2'; %1x10 
+	
+	a3 = sigmoid(z3); % the final output %1x10
+	
+	% 2) Starting backpropagation (output layer)
+	
+	y_t = Y(t,:); % the t-th training example (row) out of Y.
+	d3 = a3 - y_t; %1x10
+	
+	
+	% 3) continuing backpropagation (hidden layer)
+	
+	% note that first bias unit of Theta2 is removed
+	d2 = (d3*Theta2(:, 2:end)).* sigmoidGradient(z2); %1x25
+	
+	
+	
+	
+	
 
 
 
