@@ -95,6 +95,10 @@ J = (1/m) * sum(((-Y.*log(hyp)) - (1-Y).*log(1-hyp))(:)) + (lambda/(2*m))*(sum((
 
 % ===============Part 2 Backpropagation ====================
 
+% initializing error accumulator.
+BigDelta1 = 0;
+BigDelta2 = 0;
+
 %iterating each training example t from 1 to m
 for t = 1:m,
 	
@@ -120,13 +124,20 @@ for t = 1:m,
 	% note that first bias unit of Theta2 is removed
 	d2 = (d3*Theta2(:, 2:end)).* sigmoidGradient(z2); %1x25
 	
+	% 4) Accumulating the gradient for each layer
 	
-	
+	BigDelta1 = BigDelta1 + d2' * a1; % 25x401
+	BigDelta2 = BigDelta2 + d3' * a2; % 10x26
 	
 	
 
+% (unregularized) gradient for the neural network cost function
+Theta1_grad = (1/m) * BigDelta1;
+Theta2_grad = (1/m) * BigDelta2;
 
-
+% adding regularized term starting obmitting feature zero (bias unit)
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (lambda/m)*Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (lambda/m)*Theta2(:, 2:end);
 
 
 
